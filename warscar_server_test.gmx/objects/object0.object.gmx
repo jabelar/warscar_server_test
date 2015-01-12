@@ -29,16 +29,18 @@
 
 alarm[0] = room_speed * 3
 
-show_debug_message("Running client side")
-global.socket = network_create_socket(network_socket_tcp)
-show_debug_message("Creating socket ="+string(global.socket))
-global.ip_addr_rx = "192.168.1.21"
+show_debug_message("Running server side")
+global.socket_server = network_create_server(network_socket_tcp, 6511, 3)
+show_debug_message("Creating server socket ="+string(global.socket_server))
+global.ip_addr_server = "127.0.0.1" // on server the server is local
+global.socket_client = network_create_socket(network_socket_tcp)
+show_debug_message("Creating local client socket ="+string(global.socket_client))
+network_connect(global.socket_client, global.ip_addr_server, 6511)
+connected = false // this is related to remote connection
 // create network buffer for sent messages
 show_debug_message("Creating transmit buffer")
-tx_buff = buffer_create( 256, buffer_grow, 1)
-connected = false
-
-// ip_query_id = get_string_async("What is server ip address?",global.ip_addr_rx)
+tx_buff_server = buffer_create( 256, buffer_grow, 1)
+tx_buff_client = buffer_create( 256, buffer_grow, 1)
 </string>
           </argument>
         </arguments>
@@ -61,12 +63,11 @@ connected = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>break;
-show_debug_message("Sending networking buffer")
-buffer_seek(tx_buff, buffer_seek_start, 0)
-buffer_write(tx_buff, buffer_string, "Test from player 2")
-network_send_packet( global.socket, tx_buff, buffer_tell(tx_buff) )
-// network_send_broadcast(global.rx_socket, 6511, tx_buff, buffer_tell(tx_buff))
+            <string>show_debug_message("Sending networking buffer")
+buffer_seek(tx_buff_client, buffer_seek_start, 0)
+buffer_write(tx_buff_client, buffer_string, "Test from player 1")
+network_send_packet( global.socket_client, tx_buff_client, buffer_tell(tx_buff_client) )
+// network_send_broadcast(global.socket_client, 6511, tx_buff_client, buffer_tell(tx_buff_client))
 alarm[0]=room_speed*3
 </string>
           </argument>
@@ -101,15 +102,20 @@ var network_event_type = ds_map_find_value(async_load, "type")
 var port = ds_map_find_value(async_load, "port")
 var ip_addr_rx = ds_map_find_value(async_load, "ip")
 var rx_buff = ds_map_find_value(async_load, "buffer")
-show_debug_message("Packet received from ip ="+string(ip_addr_rx)+", socket id ="+string(socket_id)+", port ="+string(port))
+show_debug_message("Packet received from ip ="+string(ip_addr_rx)+", event id ="+string(event_id)+", port ="+string(port))
 
 if network_event_type == network_type_connect
 {
-    show_debug_message("Network type connect received")
-    global.socket = ds_map_find_value(async_load, "socket")
+    added_socket_id = ds_map_find_value(async_load, "socket")
+    show_debug_message("Network type connect received on socket = "+string(socket_id))
     connected = true
 }
-else // if socket_id == global.socket // my socket
+else if network_event_type == network_type_disconnect
+{
+    show_debug_message("Network disconnected")
+    connected = false
+}
+else if ip_addr_rx == global.ip_addr_server // local
 {
     if is_undefined(rx_buff)
     {
@@ -117,18 +123,24 @@ else // if socket_id == global.socket // my socket
     }
     else
     {
-        show_debug_message("My socket ="+string(global.socket)+"Packet contents ="+string(buffer_read(rx_buff, buffer_string)))
-        show_debug_message("Sending networking buffer")
-        buffer_seek(tx_buff, buffer_seek_start, 0)
-        buffer_write(tx_buff, buffer_string, "Acknowledged by server")
-        network_send_packet(global.socket, tx_buff, buffer_tell(tx_buff))    
+        show_debug_message("Local packet contents ="+string(buffer_read(rx_buff, buffer_string)))
     }
 }
-// else // not my socket
- //{
- //   show_debug_message("Not my socket, my socket ="+string(global.socket))
-// }
-
+else // from remote
+{
+    if is_undefined(rx_buff)
+    {
+        show_debug_message("Packet contents undefined")
+    }
+    else
+    {
+        show_debug_message("Remote packet contents ="+string(buffer_read(rx_buff, buffer_string)))
+        buffer_seek(tx_buff_server, buffer_seek_start, 0)
+        buffer_write(tx_buff_server, buffer_string, "Acknowledged by server")
+        show_debug_message("Acknowledging remote packet")
+        network_send_packet(socket_id, tx_buff_server, buffer_tell(tx_buff_server))
+    }
+}
 
 </string>
           </argument>
