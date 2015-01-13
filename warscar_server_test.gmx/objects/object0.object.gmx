@@ -41,12 +41,17 @@ connected = false // this is related to remote connection
 show_debug_message("Creating transmit buffer")
 tx_buff_server = buffer_create( 256, buffer_grow, 1)
 tx_buff_client = buffer_create( 256, buffer_grow, 1)
+
+p1_x = room0.room_width/4
+p1_y = room0.room_height/2
+p2_x = room0.room_width/2
+p2_y = room0.room_height/2
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -63,12 +68,29 @@ tx_buff_client = buffer_create( 256, buffer_grow, 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show_debug_message("Sending networking buffer")
+            <string>if gamepad_button_check(1, gp_padd) then p1_y -= 8
+if gamepad_button_check(1, gp_padu) then p1_y += 8
+if gamepad_button_check(1, gp_padr) then p1_x += 8
+if gamepad_button_check(1, gp_padl) then p1_x -= 8
+
 buffer_seek(tx_buff_client, buffer_seek_start, 0)
-buffer_write(tx_buff_client, buffer_string, "Test from player 1")
+buffer_write(tx_buff_client, buffer_u8, 1) // joystick packet
+buffer_write(tx_buff_client, buffer_s32, p1_x)
+buffer_write(tx_buff_client, buffer_s32, p1_y)
 network_send_packet( global.socket_client, tx_buff_client, buffer_tell(tx_buff_client) )
-// network_send_broadcast(global.socket_client, 6511, tx_buff_client, buffer_tell(tx_buff_client))
-alarm[0]=room_speed*3
+network_send_broadcast(global.socket_client, 6511, tx_buff_client, buffer_tell(tx_buff_client))
+
+with object1
+{
+    x = other.p1_x
+    y = other.p1_y
+}
+
+with object2
+{
+    x = other.p2_x
+    y = other.p2_y
+}
 </string>
           </argument>
         </arguments>
@@ -95,19 +117,19 @@ alarm[0]=room_speed*3
 
 // https://www.yoyogames.com/tech_blog/11 for tutorial
 
-show_debug_message("networking event occurred")
+// show_debug_message("networking event occurred")
 
 var socket_id = ds_map_find_value( async_load, "id" )
 var network_event_type = ds_map_find_value(async_load, "type")
 var port = ds_map_find_value(async_load, "port")
 var ip_addr_rx = ds_map_find_value(async_load, "ip")
 var rx_buff = ds_map_find_value(async_load, "buffer")
-show_debug_message("Packet received from ip ="+string(ip_addr_rx)+", event id ="+string(event_id)+", port ="+string(port))
+//show_debug_message("Packet received from ip ="+string(ip_addr_rx)+", event id ="+string(socket_id)+", port ="+string(port))
 
 if network_event_type == network_type_connect
 {
     added_socket_id = ds_map_find_value(async_load, "socket")
-    show_debug_message("Network type connect received on socket = "+string(socket_id))
+    show_debug_message("Network type connect received on socket = "+string(added_socket_id))
     connected = true
 }
 else if network_event_type == network_type_disconnect
@@ -123,7 +145,16 @@ else if ip_addr_rx == global.ip_addr_server // local
     }
     else
     {
-        show_debug_message("Local packet contents ="+string(buffer_read(rx_buff, buffer_string)))
+        packet_type = buffer_read(rx_buff, buffer_u8)
+        if packet_type == 1 // joystick inputs
+        {
+            p1_x = buffer_read(rx_buff, buffer_s32)
+            p1_y = buffer_read(rx_buff, buffer_s32)
+        }
+        else // unrecognized packet type
+        {
+            show_debug_message("Unrecognized packet type")
+        }
     }
 }
 else // from remote
@@ -134,11 +165,16 @@ else // from remote
     }
     else
     {
-        show_debug_message("Remote packet contents ="+string(buffer_read(rx_buff, buffer_string)))
-        buffer_seek(tx_buff_server, buffer_seek_start, 0)
-        buffer_write(tx_buff_server, buffer_string, "Acknowledged by server")
-        show_debug_message("Acknowledging remote packet")
-        network_send_packet(socket_id, tx_buff_server, buffer_tell(tx_buff_server))
+        packet_type = buffer_read(rx_buff, buffer_u8)
+        if packet_type == 1 // joystick inputs
+        {
+            p2_x = buffer_read(rx_buff, buffer_s32)
+            p2_y = buffer_read(rx_buff, buffer_s32)
+        }
+        else // unrecognized packet type
+        {
+            show_debug_message("Unrecognized packet type")
+        }
     }
 }
 
