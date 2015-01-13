@@ -12,17 +12,23 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
+    <script>scripts\scrConstants.gml</script>
     <script>scripts\scrControllerCreateEvent.gml</script>
     <script>scripts\scrControllerStepEvent.gml</script>
     <script>scripts\scrNetworkingEvent.gml</script>
-    <script>scripts\scrConstants.gml</script>
+    <script>scripts\scrAlarm0Event.gml</script>
+    <script>scripts\scrControllerDrawEvent.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\font0</font>
+  </fonts>
   <objects name="objects">
     <object>objects\objController</object>
     <object>objects\objPlayer1</object>
     <object>objects\objPlayer2</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\roomLAN</room>
     <room>rooms\room0</room>
   </rooms>
   <help>

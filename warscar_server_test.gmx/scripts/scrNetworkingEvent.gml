@@ -14,12 +14,16 @@ if network_event_type == network_type_connect
     added_socket_id = ds_map_find_value(async_load, "socket")
     global.socket_client = added_socket_id
     show_debug_message("Network type connect received on socket = "+string(added_socket_id))
-    connected = true
+    if ip_addr_rx != global.ip_addr_server // remote connection
+    {
+        global.server_state = CONNECTED
+        room_goto(room0)
+    }
 }
 else if network_event_type == network_type_disconnect
 {
     show_debug_message("Network disconnected")
-    connected = false
+    global.server_state = DISCONNECTED
 }
 else if ip_addr_rx == global.ip_addr_server // local
 {
