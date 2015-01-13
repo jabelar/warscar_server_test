@@ -1,3 +1,4 @@
+// testing git hub
 // server state
 globalvar DISCONNECTED, BROADCASTING, CONNECTED;
 DISCONNECTED = 0
