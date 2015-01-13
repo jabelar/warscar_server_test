@@ -12,15 +12,16 @@ var rx_buff = ds_map_find_value(async_load, "buffer")
 if network_event_type == network_type_connect
 {
     added_socket_id = ds_map_find_value(async_load, "socket")
-    show_debug_message("Network type connect received on socket = "+string(added_socket_id))
     if ip_addr_rx != global.ip_addr_server // remote connection
     {
+        show_debug_message("Remote network type connect received on socket = "+string(added_socket_id)+", ip address ="+ip_addr_rx)
         global.socket_client = added_socket_id
         global.server_state = CONNECTED
         room_goto(room0)
     }
     else // local connection
     {
+        show_debug_message("Local network type connect received on socket = "+string(added_socket_id)+", ip address ="+ip_addr_rx)
         global.socket_local_client = added_socket_id
     }
 }
@@ -69,11 +70,13 @@ else // from remote
         {
             case INPUT:
             {
+                // show_debug_message("Remote data packet received")
                 key_up[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_down[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_right[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_left[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_weapon[PLAYER2] = buffer_read(rx_buff, buffer_bool)
+                show_debug_message("key_up ="+string(key_up[PLAYER2]))
                 break;
             }
             default: // unrecognized packet type
