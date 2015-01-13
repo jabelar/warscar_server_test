@@ -12,12 +12,16 @@ var rx_buff = ds_map_find_value(async_load, "buffer")
 if network_event_type == network_type_connect
 {
     added_socket_id = ds_map_find_value(async_load, "socket")
-    global.socket_client = added_socket_id
     show_debug_message("Network type connect received on socket = "+string(added_socket_id))
     if ip_addr_rx != global.ip_addr_server // remote connection
     {
+        global.socket_client = added_socket_id
         global.server_state = CONNECTED
         room_goto(room0)
+    }
+    else // local connection
+    {
+        global.socket_local_client = added_socket_id
     }
 }
 else if network_event_type == network_type_disconnect
@@ -36,10 +40,13 @@ else if ip_addr_rx == global.ip_addr_server // local
         packet_type = buffer_read(rx_buff, buffer_u8)
         switch packet_type
         {
-            case OBJ_POS:
+            case INPUT:
             {
-                p1_x = buffer_read(rx_buff, buffer_s32)
-                p1_y = buffer_read(rx_buff, buffer_s32)
+                key_up[PLAYER1] = buffer_read(rx_buff, buffer_bool)
+                key_down[PLAYER1] = buffer_read(rx_buff, buffer_bool)
+                key_right[PLAYER1] = buffer_read(rx_buff, buffer_bool)
+                key_left[PLAYER1] = buffer_read(rx_buff, buffer_bool)
+                key_weapon[PLAYER1] = buffer_read(rx_buff, buffer_bool)
                 break;
             }
             default: // unrecognized packet type
@@ -60,10 +67,13 @@ else // from remote
         packet_type = buffer_read(rx_buff, buffer_u8)
         switch packet_type
         {
-            case OBJ_POS:
+            case INPUT:
             {
-                p2_x = buffer_read(rx_buff, buffer_s32)
-                p2_y = buffer_read(rx_buff, buffer_s32)
+                key_up[PLAYER2] = buffer_read(rx_buff, buffer_bool)
+                key_down[PLAYER2] = buffer_read(rx_buff, buffer_bool)
+                key_right[PLAYER2] = buffer_read(rx_buff, buffer_bool)
+                key_left[PLAYER2] = buffer_read(rx_buff, buffer_bool)
+                key_weapon[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 break;
             }
             default: // unrecognized packet type
@@ -73,4 +83,3 @@ else // from remote
         }
     }
 }
-
