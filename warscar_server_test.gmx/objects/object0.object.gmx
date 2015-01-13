@@ -68,17 +68,21 @@ p2_y = room0.room_height/2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if gamepad_button_check(1, gp_padd) then p1_y -= 8
-if gamepad_button_check(1, gp_padu) then p1_y += 8
+            <string>if gamepad_button_check(1, gp_padd) then p1_y += 8
+if gamepad_button_check(1, gp_padu) then p1_y -= 8
 if gamepad_button_check(1, gp_padr) then p1_x += 8
 if gamepad_button_check(1, gp_padl) then p1_x -= 8
+
+if p1_x &lt; 0 then p1_x = room0.room_width
+if p1_x &gt; room0.room_width then p1_x = 0
+if p1_y &lt; 0 then p1_y = room0.room_height
+if p1_y &gt; room0.room_height then p1_y = 0
 
 buffer_seek(tx_buff_client, buffer_seek_start, 0)
 buffer_write(tx_buff_client, buffer_u8, 1) // joystick packet
 buffer_write(tx_buff_client, buffer_s32, p1_x)
 buffer_write(tx_buff_client, buffer_s32, p1_y)
 network_send_packet( global.socket_client, tx_buff_client, buffer_tell(tx_buff_client) )
-network_send_broadcast(global.socket_client, 6511, tx_buff_client, buffer_tell(tx_buff_client))
 
 with object1
 {
@@ -129,6 +133,7 @@ var rx_buff = ds_map_find_value(async_load, "buffer")
 if network_event_type == network_type_connect
 {
     added_socket_id = ds_map_find_value(async_load, "socket")
+    global.socket_client = added_socket_id
     show_debug_message("Network type connect received on socket = "+string(added_socket_id))
     connected = true
 }
