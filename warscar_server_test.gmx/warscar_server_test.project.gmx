@@ -11,10 +11,15 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scrControllerCreateEvent.gml</script>
+    <script>scripts\scrControllerStepEvent.gml</script>
+    <script>scripts\scrNetworkingEvent.gml</script>
+  </scripts>
   <objects name="objects">
-    <object>objects\object0</object>
-    <object>objects\object1</object>
-    <object>objects\object2</object>
+    <object>objects\objController</object>
+    <object>objects\objPlayer1</object>
+    <object>objects\objPlayer2</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
