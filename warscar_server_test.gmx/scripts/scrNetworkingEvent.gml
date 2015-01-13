@@ -30,14 +30,18 @@ else if ip_addr_rx == global.ip_addr_server // local
     else
     {
         packet_type = buffer_read(rx_buff, buffer_u8)
-        if packet_type == 1 // joystick inputs
+        switch packet_type
         {
-            p1_x = buffer_read(rx_buff, buffer_s32)
-            p1_y = buffer_read(rx_buff, buffer_s32)
-        }
-        else // unrecognized packet type
-        {
-            show_debug_message("Unrecognized packet type")
+            case OBJ_POS:
+            {
+                p1_x = buffer_read(rx_buff, buffer_s32)
+                p1_y = buffer_read(rx_buff, buffer_s32)
+                break;
+            }
+            default: // unrecognized packet type
+            {
+                show_debug_message("Unrecognized packet type")
+            }
         }
     }
 }
@@ -50,14 +54,18 @@ else // from remote
     else
     {
         packet_type = buffer_read(rx_buff, buffer_u8)
-        if packet_type == 1 // joystick inputs
+        switch packet_type
         {
-            p2_x = buffer_read(rx_buff, buffer_s32)
-            p2_y = buffer_read(rx_buff, buffer_s32)
-        }
-        else // unrecognized packet type
-        {
-            show_debug_message("Unrecognized packet type")
+            case OBJ_POS:
+            {
+                p2_x = buffer_read(rx_buff, buffer_s32)
+                p2_y = buffer_read(rx_buff, buffer_s32)
+                break;
+            }
+            default: // unrecognized packet type
+            {
+                show_debug_message("Unrecognized packet type")
+            }
         }
     }
 }

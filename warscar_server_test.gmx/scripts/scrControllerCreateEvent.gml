@@ -1,5 +1,7 @@
 show_debug_message("Controller create event started")
 
+scrConstants()
+
 alarm[0] = room_speed * 3
 
 show_debug_message("Running server side")
