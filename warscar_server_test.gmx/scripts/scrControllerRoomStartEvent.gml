@@ -17,8 +17,6 @@ if room == room0
             other.x = irandom(room_width)
             other.y = irandom(room_height)
         }
-        // keep track of instances
-        obj_instances[OBSTACLE, i] = new_instance
         // send packet to create obstacle on remote client
         scrSendCreateObject(OBSTACLE, new_instance)
     }

@@ -33,3 +33,4 @@ player_y[PLAYER2] = room_height/2
 scrClearInput(PLAYER1)
 scrClearInput(PLAYER2)
 
+object_map = ds_map_create() // will contain list of all objects by id and type
