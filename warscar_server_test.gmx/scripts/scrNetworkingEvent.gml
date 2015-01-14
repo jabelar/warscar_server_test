@@ -76,7 +76,7 @@ else // from remote
                 key_right[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_left[PLAYER2] = buffer_read(rx_buff, buffer_bool)
                 key_weapon[PLAYER2] = buffer_read(rx_buff, buffer_bool)
-                show_debug_message("key_up ="+string(key_up[PLAYER2]))
+                // show_debug_message("key_up ="+string(key_up[PLAYER2]))
                 break;
             }
             default: // unrecognized packet type

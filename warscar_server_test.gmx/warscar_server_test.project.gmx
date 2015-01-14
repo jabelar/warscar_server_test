@@ -8,6 +8,9 @@
   <sprites name="sprites">
     <sprite>sprites\sprite0</sprite>
     <sprite>sprites\sprite1</sprite>
+    <sprite>sprites\sprObstacle</sprite>
+    <sprite>sprites\sprFlag</sprite>
+    <sprite>sprites\sprBullet</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -18,6 +21,7 @@
     <script>scripts\scrNetworkingEvent.gml</script>
     <script>scripts\scrAlarm0Event.gml</script>
     <script>scripts\scrControllerDrawEvent.gml</script>
+    <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
@@ -26,6 +30,9 @@
     <object>objects\objController</object>
     <object>objects\objPlayer1</object>
     <object>objects\objPlayer2</object>
+    <object>objects\objObstacle</object>
+    <object>objects\objFlag</object>
+    <object>objects\objBullet</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomLAN</room>
