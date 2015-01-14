@@ -25,6 +25,7 @@
     <script>scripts\scrAlarm0Event.gml</script>
     <script>scripts\scrControllerDrawEvent.gml</script>
     <script>scripts\scrSendCreateObject.gml</script>
+    <script>scripts\scrSendCreateObjectSpeedDir.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
   <fonts name="fonts">
