@@ -26,3 +26,4 @@ INPUT = 0
 globalvar OBSTACLE, FLAG;
 OBSTACLE = 0
 FLAG = 1
+BULLET = 2

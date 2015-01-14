@@ -30,14 +30,6 @@ p1ayer_y[PLAYER1] = room_height/2
 player_x[PLAYER2] = room_width/2
 player_y[PLAYER2] = room_height/2
 
-key_up[PLAYER1] = false
-key_down[PLAYER1] = false
-key_right[PLAYER1] = false
-key_left[PLAYER1] = false
-key_weapon[PLAYER1] = false
+scrClearInput(PLAYER1)
+scrClearInput(PLAYER2)
 
-key_up[PLAYER2] = false
-key_down[PLAYER2] = false
-key_right[PLAYER2] = false
-key_left[PLAYER2] = false
-key_weapon[PLAYER2] = false

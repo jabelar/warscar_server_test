@@ -20,12 +20,6 @@ if room == room0
         // keep track of instances
         obj_instances[OBSTACLE, i] = new_instance
         // send packet to create obstacle on remote client
-        buffer_seek(tx_buff_server, buffer_seek_start, 0)
-        buffer_write(tx_buff_server, buffer_u8, OBJ_CREATE)
-        buffer_write(tx_buff_server, buffer_u8, OBSTACLE)
-        buffer_write(tx_buff_server, buffer_s32, new_instance.x)
-        buffer_write(tx_buff_server, buffer_s32, new_instance.y)
-        network_send_packet( global.socket_client, tx_buff_server, buffer_tell(tx_buff_server) )
-        show_debug_message("Sending packet to create obstacle")
+        scrSendCreateObject(OBSTACLE, new_instance)
     }
 }

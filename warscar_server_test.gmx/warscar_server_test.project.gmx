@@ -18,9 +18,13 @@
     <script>scripts\scrConstants.gml</script>
     <script>scripts\scrControllerCreateEvent.gml</script>
     <script>scripts\scrControllerStepEvent.gml</script>
+    <script>scripts\scrClearInput.gml</script>
+    <script>scripts\scrProcessInputPrevious.gml</script>
+    <script>scripts\scrProcessInputNew.gml</script>
     <script>scripts\scrNetworkingEvent.gml</script>
     <script>scripts\scrAlarm0Event.gml</script>
     <script>scripts\scrControllerDrawEvent.gml</script>
+    <script>scripts\scrSendCreateObject.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
   <fonts name="fonts">
