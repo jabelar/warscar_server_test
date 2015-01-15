@@ -32,6 +32,11 @@ switch room
             x = other.player_x[PLAYER2]
             y = other.player_y[PLAYER2]
         }
+        
+        // process collisions
+        scrCheckCollisions()
+        
         break;
     }
+    
 }

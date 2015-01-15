@@ -16,10 +16,10 @@ show_debug_message("Creating local client socket ="+string(global.socket_client)
 network_connect(global.socket_local_client, global.ip_addr_server, 6511)
 // create network buffer for sent messages
 show_debug_message("Creating transmit buffer")
-tx_buff_server = buffer_create( 256, buffer_grow, 1)
-tx_buff_broadcast = buffer_create( 256, buffer_grow, 1)
-tx_buff_client = buffer_create( 256, buffer_grow, 1)
-tx_buff_local_client = buffer_create( 256, buffer_grow, 1)
+global.tx_buff_server = buffer_create( 256, buffer_grow, 1)
+global.tx_buff_broadcast = buffer_create( 256, buffer_grow, 1)
+global.tx_buff_client = buffer_create( 256, buffer_grow, 1)
+global.tx_buff_local_client = buffer_create( 256, buffer_grow, 1)
 
 // player objects are singletons but would like to loop through them
 player_object[PLAYER1] = objPlayer1
@@ -33,4 +33,4 @@ player_y[PLAYER2] = room_height/2
 scrClearInput(PLAYER1)
 scrClearInput(PLAYER2)
 
-object_map = ds_map_create() // will contain list of all objects by id and type
+global.object_map = ds_map_create() // will contain list of all objects by id and type

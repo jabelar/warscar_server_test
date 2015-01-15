@@ -22,10 +22,12 @@
     <script>scripts\scrProcessInputPrevious.gml</script>
     <script>scripts\scrSendLocalInput.gml</script>
     <script>scripts\scrSendPlayerPositions.gml</script>
+    <script>scripts\scrCheckCollisions.gml</script>
     <script>scripts\scrProcessInputNew.gml</script>
     <script>scripts\scrNetworkingEvent.gml</script>
     <script>scripts\scrAlarm0Event.gml</script>
     <script>scripts\scrControllerDrawEvent.gml</script>
+    <script>scripts\scrDestroyObject.gml</script>
     <script>scripts\scrSendCreateObject.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
