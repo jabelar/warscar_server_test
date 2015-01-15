@@ -38,5 +38,5 @@ if key_weapon[argument0]
     new_instance = instance_create(player_object[argument0].x, player_object[argument0].y, objBullet)
     new_instance.speed = 32
     new_instance.direction = irandom(360)
-    scrSendCreateObjectSpeedDir(BULLET, new_instance)
+    scrSendCreateObject(BULLET, new_instance)
 }
