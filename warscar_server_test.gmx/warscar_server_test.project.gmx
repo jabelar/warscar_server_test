@@ -29,6 +29,7 @@
     <script>scripts\scrControllerDrawEvent.gml</script>
     <script>scripts\scrDestroyObject.gml</script>
     <script>scripts\scrSendCreateObject.gml</script>
+    <script>scripts\scrSendCreateEffect.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
   <fonts name="fonts">
