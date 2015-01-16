@@ -4,7 +4,9 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\sndMainGun</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\sprite0</sprite>
     <sprite>sprites\sprite1</sprite>
@@ -30,6 +32,7 @@
     <script>scripts\scrDestroyObject.gml</script>
     <script>scripts\scrSendCreateObject.gml</script>
     <script>scripts\scrSendCreateEffect.gml</script>
+    <script>scripts\scrSendPlaySound.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
   </scripts>
   <fonts name="fonts">

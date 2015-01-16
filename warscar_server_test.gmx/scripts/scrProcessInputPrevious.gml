@@ -35,8 +35,12 @@ if player_y[argument0] > room0.room_height then player_y[argument0] = 0
 
 if key_weapon[argument0]
 {
+    // create bullet object
     new_instance = instance_create(player_object[argument0].x, player_object[argument0].y, objBullet)
     new_instance.speed = 32
     new_instance.direction = 0 // irandom(360)
     scrSendCreateObject(BULLET, new_instance)
+    // create bullet sound
+    audio_play_sound_at(sndMainGun, player_x[argument0], player_y[argument1], 0, room_width*1.5, room_width*2, 1, false, 100)
+    scrSendPlaySound(SOUND_MAIN_GUN, player_x[argument0], player_y[argument0])
 }
