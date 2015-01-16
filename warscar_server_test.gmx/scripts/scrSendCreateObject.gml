@@ -11,6 +11,3 @@ buffer_write(global.tx_buff_server, buffer_s32, argument1.direction)
 network_send_packet( global.socket_client, global.tx_buff_server, buffer_tell(global.tx_buff_server) )
 show_debug_message("Sending packet to create instance "+string(argument1)+" of object type = "+string(argument0))
 
-// keep track of instances
-ds_map_add(global.object_map, argument1, argument0)
-

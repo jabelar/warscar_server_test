@@ -17,7 +17,7 @@ if room == room0
             other.x = irandom(room_width)
             other.y = irandom(room_height)
         }
-        // send packet to create obstacle on remote client
-        scrSendCreateObject(OBSTACLE, new_instance)
     }
+    // tell connected clients to replicate all the objects
+    scrSendAllObjects()
 }

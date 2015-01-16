@@ -19,21 +19,28 @@
   <scripts name="scripts">
     <script>scripts\scrConstants.gml</script>
     <script>scripts\scrControllerCreateEvent.gml</script>
-    <script>scripts\scrControllerStepEvent.gml</script>
-    <script>scripts\scrClearInput.gml</script>
-    <script>scripts\scrProcessInputPrevious.gml</script>
-    <script>scripts\scrSendLocalInput.gml</script>
-    <script>scripts\scrSendPlayerPositions.gml</script>
-    <script>scripts\scrCheckCollisions.gml</script>
-    <script>scripts\scrProcessInputNew.gml</script>
-    <script>scripts\scrNetworkingEvent.gml</script>
     <script>scripts\scrAlarm0Event.gml</script>
     <script>scripts\scrControllerDrawEvent.gml</script>
-    <script>scripts\scrDestroyObject.gml</script>
-    <script>scripts\scrSendCreateObject.gml</script>
-    <script>scripts\scrSendCreateEffect.gml</script>
-    <script>scripts\scrSendPlaySound.gml</script>
     <script>scripts\scrControllerRoomStartEvent.gml</script>
+    <scripts name="Step">
+      <script>scripts\scrControllerStepEvent.gml</script>
+      <scripts name="Input">
+        <script>scripts\scrClearInput.gml</script>
+        <script>scripts\scrProcessInputPrevious.gml</script>
+        <script>scripts\scrSendLocalInput.gml</script>
+        <script>scripts\scrProcessInputNew.gml</script>
+      </scripts>
+      <script>scripts\scrCheckCollisions.gml</script>
+    </scripts>
+    <scripts name="Networking">
+      <script>scripts\scrNetworkingEvent.gml</script>
+      <script>scripts\scrSendAllObjects.gml</script>
+      <script>scripts\scrSendCreateObject.gml</script>
+      <script>scripts\scrDestroyObject.gml</script>
+      <script>scripts\scrSendCreateEffect.gml</script>
+      <script>scripts\scrSendPlaySound.gml</script>
+      <script>scripts\scrSendPlayerPositions.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
